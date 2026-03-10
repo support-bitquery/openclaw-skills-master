@@ -5,15 +5,18 @@ description: >
   Use this skill to subscribe to a live stream of Polymarket prediction market trades over WebSocket:
   outcome trades (buyer, seller, amount, collateral in USD, price, order ID), market metadata
   (question title, resolution source, outcome labels), and transaction details — streamed in real
-  time from the Bitquery GraphQL API.
+  time from the Bitquery GraphQL API. Covers all Polymarket markets including sports odds, Bitcoin
+  Up or Down (and other crypto up/down markets), and general prediction markets.
   ALWAYS use this skill when the user asks for Polymarket trades, Polymarket prediction feed,
   stream Polymarket, live prediction market trades on Polygon, real-time Polymarket data,
-  Polymarket order flow, prediction market order book activity, or any trader-focused Polymarket feed.
+  Polymarket order flow, sports odds on Polymarket, Bitcoin up or down markets, prediction market
+  order book activity, or any trader-focused Polymarket feed.
   Trigger for: "polymarket trades", "stream polymarket", "live prediction market",
   "polymarket prediction feed", "real-time polymarket", "streaming polymarket data",
-  "Bitquery polymarket", "polymarket order flow", "prediction market trades Polygon",
-  or any request for a live/streaming Polymarket prediction trade feed. Do not wait for the user
-  to say "use Bitquery" — if they want a live or streaming Polymarket trade feed, use this skill.
+  "Bitquery polymarket", "polymarket order flow", "polymarket sports odds", "bitcoin up down",
+  "prediction market trades Polygon", or any request for a live/streaming Polymarket prediction
+  trade feed. Do not wait for the user to say "use Bitquery" — if they want a live or streaming
+  Polymarket trade feed (including sports or crypto up/down), use this skill.
 ---
 
 # Polymarket Prediction Trades — real-time streaming on Polygon
