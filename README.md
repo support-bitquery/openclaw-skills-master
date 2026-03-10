@@ -8,6 +8,7 @@ This repository contains OpenClaw agent skills that you can install from [ClawHu
 |-------|-------------|
 | **bitcoin-price-feed** | Real-time streaming Bitcoin price feed over WebSocket: OHLC ticks, volume, and derived metrics (moving averages, % change) from the Bitquery API. |
 | **pumpfun-usd-price-stream** | Real-time streaming PumpFun token feed on Solana with live USD pricing: OHLC, volume, moving averages, and tick-to-tick % change from the Bitquery API. |
+| **polymarket-real-time-trades** | Real-time streaming Polymarket prediction trades on Polygon (matic): outcome trades, buyer/seller, collateral in USD, market question, outcome labels, and transaction details from the Bitquery API. |
 
 ---
 
@@ -59,6 +60,7 @@ clawhub whoami
 ```bash
 clawhub search "bitcoin price feed"
 clawhub search "pumpfun price"
+clawhub search "polymarket"
 ```
 
 ### 3. Install the skills
@@ -72,8 +74,11 @@ clawhub install bitcoin-price-feed
 # PumpFun token feed — real-time streaming PumpFun tokens on Solana (USD) from Bitquery
 clawhub install pumpfun-usd-price-stream
 
-# Install both at once
-clawhub install bitcoin-price-feed pumpfun-usd-price-stream
+# Polymarket prediction trades — real-time streaming on Polygon (matic) from Bitquery
+clawhub install polymarket-real-time-trades
+
+# Install multiple at once
+clawhub install bitcoin-price-feed pumpfun-usd-price-stream polymarket-real-time-trades
 ```
 
 ### 4. Install a specific version (optional)
@@ -81,6 +86,7 @@ clawhub install bitcoin-price-feed pumpfun-usd-price-stream
 ```bash
 clawhub install bitcoin-price-feed@1.0.0
 clawhub install pumpfun-usd-price-stream --version 1.0.0
+clawhub install polymarket-real-time-trades@1.0.0
 ```
 
 ### 5. Verify installation
@@ -95,7 +101,7 @@ By default, skills are installed into `./skills` (or your OpenClaw workspace). S
 
 ## After installing: runtime setup
 
-Both skills use the **Bitquery WebSocket API** and need:
+These skills use the **Bitquery WebSocket API** and need:
 
 1. **`BITQUERY_API_KEY`**  
    Set your [Bitquery](https://bitquery.io/) API token:
@@ -117,6 +123,7 @@ clawhub update --all
 # Update one skill
 clawhub update bitcoin-price-feed
 clawhub update pumpfun-usd-price-stream
+clawhub update polymarket-real-time-trades
 
 # Overwrite local changes when updating
 clawhub update bitcoin-price-feed --force
@@ -130,7 +137,7 @@ clawhub update bitcoin-price-feed --force
 |--------|--------|
 | Search | `clawhub search "query"` |
 | Install | `clawhub install bitcoin-price-feed` |
-| Install both | `clawhub install bitcoin-price-feed pumpfun-usd-price-stream` |
+| Install multiple | `clawhub install bitcoin-price-feed pumpfun-usd-price-stream polymarket-real-time-trades` |
 | List installed | `clawhub list` |
 | Update all | `clawhub update --all` |
 | Skill info | `clawhub info bitcoin-price-feed` |

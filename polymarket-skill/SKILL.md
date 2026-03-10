@@ -28,18 +28,27 @@ Trades are filtered to `TransactionStatus.Success: true`. The stream uses Bitque
 
 ## What to consider before installing
 
-This skill implements a Bitquery WebSocket Polymarket prediction-trade feed and uses one external dependency and one credential. Before installing:
+This skill's code implements the described Polymarket stream and contacts only Bitquery. Before installing:
 
-1. **Registry metadata**: The registry may not list `BITQUERY_API_KEY` even though this skill and its script require it. Ask the publisher or update the registry metadata before installing so installers surface the secret requirement.
-2. **API key in URL**: The API key must be passed in the WebSocket URL as a query parameter, which can leak to logs or histories. Avoid printing the full URL, store the key in a secure environment variable, and rotate it if it may have been exposed.
-3. **Sandbox first**: Review and run the included script in a sandboxed environment (e.g. a virtualenv) to confirm behavior and limit blast radius.
-4. **Source and publisher**: If the skill's homepage or source is unknown, consider verifying the publisher or using an alternative with a verified source. If the registry metadata declares `BITQUERY_API_KEY` and the source/publisher are validated, this skill is likely coherent and benign.
+1. **Registry metadata**: Confirm the registry metadata declares **`BITQUERY_API_KEY`** as a required credential. The skill will fail at runtime without it. If the registry does not list this env var, the mismatch with this SKILL.md is the main inconsistency — ask the publisher to update the registry so installers see the requirement.
+2. **Treat the API key as a secret**: Set it in an environment variable only. Do **not** print or log the full WebSocket URL; the token is passed as `?token=...` and can appear in logs, shell history, or monitoring tools. Rotate the key if you suspect it was exposed during testing or use.
+3. **Sandbox first**: Run the bundled script in a sandboxed environment (e.g. virtualenv or container) to observe behavior before relying on it in production.
+4. **Verify publisher/source**: If the skill's homepage or source is unknown, verify the publisher or use an alternative from a trusted source. If the registry declares `BITQUERY_API_KEY` and the source is validated, this skill is coherent with its stated purpose.
+5. **Rotate the key if exposed**: If the key may have been exposed (e.g. URL printed, committed, or logged), rotate it in the Bitquery dashboard and update your environment.
+
+---
+
+## Credentials
+
+- **Single required secret at runtime:** `BITQUERY_API_KEY` (Bitquery API token).
+- **Registry:** The registry metadata should declare this as the primary/required credential. If it does not, installers may not see that the skill needs an API key until they read this SKILL.md or run the script — that mismatch is the main inconsistency to fix on the registry side.
+- **Usage:** The key must be passed in the WebSocket URL as a query parameter (`?token=...`); Bitquery does not support header-based auth for this endpoint. Because the token appears in the URL, there is a higher risk of accidental exposure if the URL is printed or captured. **Best practice:** set `BITQUERY_API_KEY` in the environment, never log or print the full WebSocket URL, and rotate the key if you suspect exposure.
 
 ---
 
 ## Prerequisites
 
-- **Environment**: `BITQUERY_API_KEY` — your Bitquery API token (required). The token **must be passed in the WebSocket URL only** as `?token=...` (e.g. `wss://streaming.bitquery.io/graphql?token=YOUR_KEY`); Bitquery does not support header-based auth for this endpoint. Because the token appears in the URL, it can show up in logs, monitoring tools, or browser/IDE history — treat it as a secret and avoid logging or printing the full URL.
+- **Environment**: `BITQUERY_API_KEY` — your Bitquery API token (required). Set it in your environment; the script and examples read it from there. The token is passed in the WebSocket URL only as `?token=...` — do not print or log the full URL.
 - **Runtime**: Python 3 and `pip`. Install the dependency: `pip install 'gql[websockets]'`.
 
 ---
